@@ -64,13 +64,6 @@ section{position:relative;padding:clamp(4rem,10vh,8rem) 0}
 .lead{color:var(--steel);font-size:clamp(1.02rem,1.25vw,1.15rem);line-height:1.85;max-width:56ch;font-weight:300}
 .gline{height:1px;background:linear-gradient(90deg,transparent,var(--lineg),transparent)}
 
-.cur,.cur-r{position:fixed;top:0;left:0;border-radius:50%;z-index:9000;pointer-events:none;transform:translate(-50%,-50%)}
-.cur{width:6px;height:6px;background:var(--gold2)}
-.cur-r{width:40px;height:40px;border:1px solid var(--gold-soft);transition:width .3s var(--ease),height .3s var(--ease),background .3s,border-color .3s}
-.cur-r.grow{width:66px;height:66px;background:rgba(197,160,79,.08);border-color:var(--gold)}
-@media (hover:none){.cur,.cur-r{display:none}}
-@media (hover:hover){body{cursor:none}a,button{cursor:none}}
-
 nav{position:fixed;top:0;left:0;width:100%;z-index:800;display:flex;align-items:center;justify-content:space-between;padding:1.15rem clamp(1.3rem,5vw,3.5rem);transition:.45s var(--ease);border-bottom:1px solid transparent}
 nav.scr{background:rgba(11,13,19,.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--line2);padding-top:.75rem;padding-bottom:.75rem}
 .brand{display:flex;align-items:center;gap:.85rem}
@@ -182,7 +175,7 @@ nav.scr{background:rgba(11,13,19,.85);backdrop-filter:blur(16px);border-bottom:1
 .loc-row b{display:block;font-family:var(--serif);font-weight:600;font-size:1.18rem;letter-spacing:.01em;margin-bottom:.25rem}
 .loc-row span{font-size:.92rem;color:var(--steel);font-weight:300}
 .loc-map{overflow:hidden;border:1px solid var(--line);min-height:380px;position:relative}
-.loc-map iframe{width:100%;height:100%;min-height:380px;border:0;filter:grayscale(1) invert(.92) contrast(.86) hue-rotate(180deg)}
+.loc-map iframe{width:100%;height:100%;min-height:380px;border:0;filter:grayscale(.3) contrast(1.02)}
 
 /* cta */
 .cta{text-align:center;position:relative;overflow:hidden;border-top:1px solid var(--line2)}
@@ -236,8 +229,6 @@ footer{border-top:1px solid var(--line);padding:3.8rem 0 2.4rem;background:var(-
 </style>
 </head>
 <body>
-<div class="cur" id="cur"></div><div class="cur-r" id="curR"></div>
-
 <nav id="nav">
   <a href="#top" class="brand" data-cur>
     <img src="img/logo.png" alt="Barbearia Du Bigode — Bigod's Club, Curitiba">
@@ -437,13 +428,6 @@ footer{border-top:1px solid var(--line);padding:3.8rem 0 2.4rem;background:var(-
   mm.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){burger.classList.remove('on');mm.classList.remove('on');});});
 
   if(!TOUCH&&typeof gsap!=='undefined'){
-    var cur=document.getElementById('cur'),r=document.getElementById('curR');
-    var xT=gsap.quickTo(cur,'x',{duration:.1,ease:'power3'}),yT=gsap.quickTo(cur,'y',{duration:.1,ease:'power3'});
-    var rx=gsap.quickTo(r,'x',{duration:.42,ease:'power3'}),ry=gsap.quickTo(r,'y',{duration:.42,ease:'power3'});
-    addEventListener('mousemove',function(e){xT(e.clientX);yT(e.clientY);rx(e.clientX);ry(e.clientY);},{passive:true});
-    document.querySelectorAll('[data-cur],a,button').forEach(function(el){
-      el.addEventListener('mouseenter',function(){r.classList.add('grow');});
-      el.addEventListener('mouseleave',function(){r.classList.remove('grow');});});
     document.querySelectorAll('[data-mag]').forEach(function(el){
       el.addEventListener('mousemove',function(e){var b=el.getBoundingClientRect();gsap.to(el,{x:(e.clientX-b.left-b.width/2)*.2,y:(e.clientY-b.top-b.height/2)*.28,duration:.4,ease:'power3'});});
       el.addEventListener('mouseleave',function(){gsap.to(el,{x:0,y:0,duration:.6,ease:'elastic.out(1,.4)'});});});
